@@ -4,31 +4,41 @@ from .models import Author, Genre, Book, BookInstance
 
 
 class BooksInstanceInline(admin.TabularInline):
-    model = BookInstance
-    readonly_fields = ('id',)
-    can_delete = False
-    extra = 0
+    """knygų egzempliorių vaizdavimo klasė
+    (sukuria eilutes kurias galima įdėti į kitą viewsą)"""
+    model = BookInstance  # modelis iš kurio kuriamos eilutės(turi būti vaikinis kitam modeliui)
+    readonly_fields = ('id',)  # nurodom kad id lauko šiam viewse negalima redaguoti
+    can_delete = False  # negalima trinti
+    extra = 0  # kad nepridėtų į viewsą tuščių eilučių
 
 
+# VISOS iš admin.ModelAdmin paveldinčios klasės keičia standartinį modelio viewsą admin svetainėje
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'display_genre')
-    inlines = [BooksInstanceInline]
+    list_display = ('title', 'author', 'display_genre')  # nurodom kokius stulpelius vaizduosime BookInstance
+    # viewse admin svetainėje
+    # display_genre atsiranda iš metodo aprašyto Book modelyje,
+    # models.py faile
+    inlines = [BooksInstanceInline]  # prijungiam papildomą vaizdą(eilutes) iš class BooksInstanceInline
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'due_back')
-    list_filter = ('status', 'due_back')
-    search_fields = ('id', 'book__title')
-    list_editable = ('due_back', 'status')
+    list_display = ('book', 'status', 'due_back')  # stulpeliai BookInstance viewse admin svetainėje
+    list_filter = ('status', 'due_back')  # sukuriamas filtro skydelis
+    search_fields = ('id', 'book__title')  # paieškos laukas
+    list_editable = ('due_back', 'status')  # nurodom kad į list_display įtraukti stulpeliai gali būti redaguojami
 
-    fieldsets = (
-        ('General', {'fields': ('id', 'book',)}),
-        ('Availability', {'fields': ('status', 'due_back')})
+    fieldsets = (  # sukuria atskirus tabus laukams (šie laukai rodomi defaultu, čia sukuriamas tik padalinimas)
+        ('General', {'fields': ('id', 'book',)}),  # General, Availability - mūsų sukurti tabų pavadinimai, žodynuose
+        ('Availability', {'fields': ('status', 'due_back')})  # raktuose fields nurodoma kokie laukai bus kokiam tabe
     )
 
-class AuthorAdmin(admin.ModelAdmin):
+
+class AuthorAdmin(admin.ModelAdmin):  # stulpeliai Author viewse admin svetainėje
     list_display = ('last_name', 'first_name', 'display_books')
 
+
+# !!! kad nūtų naudojami mūsų sukurti admin viewsai, viewsų klases reikia surišti su modelių klasėmis
+# panaudojus admin.site.register metodą
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Genre)
 admin.site.register(Book, BookAdmin)
