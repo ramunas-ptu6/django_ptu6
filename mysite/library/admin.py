@@ -14,10 +14,14 @@ class BooksInstanceInline(admin.TabularInline):
 
 # VISOS iš admin.ModelAdmin paveldinčios klasės keičia standartinį modelio viewsą admin svetainėje
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'display_genre')  # nurodom kokius stulpelius vaizduosime BookInstance
+    list_display = ('title', 'author', 'display_genre', 'get_authname')  # nurodom kokius stulpelius vaizduosime BookInstance
     # viewse admin svetainėje
     # display_genre atsiranda iš metodo aprašyto Book modelyje,
     # models.py faile
+    search_fields = ('author__last_name',)
+    def get_authname(self, obj): # BONUS - būdas per foreign key pasiekti konkretų lauką tėvinėj lentelėj
+        return obj.author.first_name
+    get_authname.short_description = 'Autoriaus vardas'
     inlines = [BooksInstanceInline]  # prijungiam papildomą vaizdą(eilutes) iš class BooksInstanceInline
 
 
