@@ -26,3 +26,13 @@ def index(request):
     # formuojam galutinį vaizdą iš šablono index.html ir duomenų
     # context žodyne(request - užklausa atėjusi iš kliento)
     return render(request, 'index.html', context=context)
+
+
+def authors(request):
+
+    authors = Author.objects.all()
+    context = {
+        'authors': authors
+    }
+    return render(request, 'authors.html', context=context)
+
