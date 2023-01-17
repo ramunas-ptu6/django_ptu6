@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views import generic
 
 from .models import Author, Book, BookInstance
@@ -15,6 +15,8 @@ def index(request):
     # suskaičiuojam autorius
     num_authors = Author.objects.all().count()
 
+
+
     context = {  # šablono konteksto kintamasis
         'num_books': num_books,
         'num_instances': num_instances,
@@ -28,18 +30,20 @@ def index(request):
 
 
 def authors(request):
+
     authors = Author.objects.all()
     context = {
         'authors': authors
     }
     return render(request, 'authors.html', context=context)
 
-
-def author(request, author_id):
-    single_author = get_object_or_404(Author, pk=author_id)
-    return render(request, 'author.html', {'author': single_author})
-
-
 class BookListView(generic.ListView):
-    model = Book  # pagal modelio pav. autosukuriamas book_list kintamasis(visi objektai iš klasės) perduodamas į šabloną
+    model = Book
     template_name = 'book_list.html'
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    template_name = 'book_detail.html'
+
+
