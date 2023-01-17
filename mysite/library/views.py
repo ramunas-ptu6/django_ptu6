@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views import generic
 
 from .models import Author, Book, BookInstance
 
@@ -35,4 +36,14 @@ def authors(request):
         'authors': authors
     }
     return render(request, 'authors.html', context=context)
+
+class BookListView(generic.ListView):
+    model = Book
+    template_name = 'book_list.html'
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    template_name = 'book_detail.html'
+
 
