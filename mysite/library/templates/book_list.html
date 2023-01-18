@@ -4,7 +4,7 @@
 {% if book_list %}
 <ul>
     {% for book_obj in book_list %}
-    <li>{{ book_obj.title }} {{ book_obj.author }}</li>
+    <li><a href="{{ book_obj.id }}">{{ book_obj.title }}</a> {{ book_obj.author }}</li>
     {% endfor %}
 </ul>
 {% else %}

@@ -1,4 +1,6 @@
 from django.urls import path
+from unicodedata import name
+
 from . import views
 
 urlpatterns = [
@@ -6,4 +8,6 @@ urlpatterns = [
     path('authors/', views.authors, name='authors'),
     path('authors/<int:author_id>', views.author, name='author-detail'),
     path('books/', views.BookListView.as_view(), name='books'),
+    path('books/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
+
 ]
