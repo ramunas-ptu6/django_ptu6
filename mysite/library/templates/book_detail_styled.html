@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ book.title }} </h1>
+<p><strong>Autorius: </strong><a href="{% url 'author-detail' book.author.id %}">{{ book.author }}</a></p>
+<p><strong>Aprašymas: </strong>{{ book.summary }} </p>
+<p><strong>ISBN: </strong>{{ book.isbn }} </p>
+<p><strong>Žanras: </strong>{{ book.genre.all|join:", " }}</p>
+
+<h4>Kopijos:</h4>
+{% for book_inst_obj in book.bookinstance_set.all %}
+<hr>
+
+<p class="{% if book_inst_obj.status == 'g' %}text-success
+{% elif book_inst_obj.status == 'p' %}text-danger
+{% else %}text-warning
+{% endif %}">{{ book_inst_obj.get_status_display }}</p>
+
+{% if book_inst_obj.status != 'a' %}
+<p>{{ book_inst_obj.due_back }}</p>
+{% endif %}
+
+<p class="text-muted">{{ book_inst_obj.id }}</p>
+{% endfor %}
+{% endblock %}

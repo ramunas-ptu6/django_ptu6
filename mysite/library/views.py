@@ -48,4 +48,4 @@ class BookListView(generic.ListView):
 
 class BookDetailView(generic.DetailView):
     model = Book # šablonui autosukuriamas kintamas book
-    template_name = 'book_detail.html'
+    template_name = 'book_detail_styled.html'
