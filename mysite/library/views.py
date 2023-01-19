@@ -42,6 +42,7 @@ def author(request, author_id):
 
 class BookListView(generic.ListView):
     model = Book  # pagal modelio pav. autosukuriamas book_list kintamasis(visi objektai iš klasės) perduodamas į šabloną
+    paginate_by = 4
     template_name = 'book_list.html'
     # context_object_name = 'my_book_list' galime pasikeisti automatinį konteksto kintamąjį(book_list) į custom pavadinimą
 

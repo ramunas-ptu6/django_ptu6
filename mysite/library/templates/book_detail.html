@@ -7,7 +7,8 @@
 <p>Žanras: {{ book.genre.all|join:", " }}</p>
 
 <h4>Kopijos:</h4>
-{% for book_inst_obj in book.bookinstance_set.all %}
+{% for book_inst_obj in book.book_instance_set.all %}
+{% for eilute_obj in uzsakymas.uzsakymoeilute_set.all %}
 <hr>
 <p>{{ book_inst_obj.get_status_display }}</p>
 <p>{{ book_inst_obj.due_back }}</p>
