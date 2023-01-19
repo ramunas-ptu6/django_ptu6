@@ -12,11 +12,11 @@
             {% if book_obj.cover %}
                 <img src="{{ book_obj.cover.url }}" class="card-img-top">
             {% else %}
-                <img src="" class="card-img-top">
+                <img src="{% static 'img/no-image.png' %}" class="card-img-top">
             {% endif %}
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">{{ book_obj.author }}</h6>
-                <p class="card-text">{{ book_obj.title }}</p>
+                <p class="card-text"><a class="card-link" href="{{ book_obj.id }}">{{ book_obj.title }}</a></p>
             </div>
         </div>
     </div>
