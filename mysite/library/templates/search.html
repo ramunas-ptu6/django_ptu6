@@ -5,7 +5,8 @@
 <ul>
     {% for book_obj in books %}
         <li>
-            {{ book_obj.title }}
+        <a href="{% url 'book-detail' book_obj.id %}">{{ book_obj.title }}</a>
+            {{ book_obj.isbn }} {{ book_obj.author }}
         </li>
     {% endfor %}
 </ul>
