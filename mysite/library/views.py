@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import Author, Book, BookInstance
 
@@ -54,3 +55,12 @@ class BookListView(generic.ListView):
 class BookDetailView(generic.DetailView):
     model = Book # šablonui autosukuriamas kintamas book
     template_name = 'book_detail_styled.html'
+
+
+def search(request):
+    query = request.GET.get("query")
+    search_results = Book.objects.filter(
+                        Q(title__icontains=query)
+
+        )
+    return render(request, "search.html", {"books": search_results, "query": query})

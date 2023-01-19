@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Paieškos pagal {{query}} rezultatai:</h1>
+{% if books %}
+<ul>
+    {% for book_obj in books %}
+        <li>
+            {{ book_obj.title }}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nieko nerasta.. </p>
+{% endif %}
+{% endblock %}

@@ -35,6 +35,7 @@ class Book(models.Model):
         return reverse('book-detail', args=[str(self.id)])
 
     class Meta:
+        ordering = ["title"]
         verbose_name = "Knyga"
         verbose_name_plural = "Knygos"
 
