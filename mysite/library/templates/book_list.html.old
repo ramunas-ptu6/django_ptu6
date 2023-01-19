@@ -1,31 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-{% load static %}
-
 <h1>Knygų sąrašas</h1>
-
 {% if book_list %}
-<div class="row">
+<ul>
     {% for book_obj in book_list %}
-    <div class="col-md4 d-flex align-items-stretch">
-        <div class="card mb-4 shadow-sm" style="width: 14rem;">
-            {% if book_obj.cover %}
-                <img src="{{ book_obj.cover.url }}" class="card-img-top">
-            {% else %}
-                <img src="" class="card-img-top">
-            {% endif %}
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">{{ book_obj.author }}</h6>
-                <p class="card-text">{{ book_obj.title }}</p>
-            </div>
-        </div>
-    </div>
+    <li><a href="{{ book_obj.id }}">{{ book_obj.title }}</a> {{ book_obj.author }}</li>
     {% endfor %}
-</div>
+</ul>
 {% else %}
 <p>Bibliotekoje knygų nėra.</p>
 {% endif %}
-
   <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
@@ -43,4 +27,7 @@
         {% endif %}
     </span>
 </div>
+
+
+
 {% endblock %}

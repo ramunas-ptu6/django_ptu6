@@ -7,8 +7,8 @@ class BooksInstanceInline(admin.TabularInline):
     """knygų egzempliorių vaizdavimo klasė
     (sukuria eilutes kurias galima įdėti į kitą viewsą)"""
     model = BookInstance  # modelis iš kurio kuriamos eilutės(turi būti vaikinis kitam modeliui)
-    readonly_fields = ('id',)  # nurodom kad id lauko šiam viewse negalima redaguoti
-    can_delete = False  # negalima trinti
+    # readonly_fields = ('id',)  # nurodom kad id lauko šiam viewse negalima redaguoti
+    # can_delete = False  # negalima trinti
     extra = 0  # kad nepridėtų į viewsą tuščių eilučių
 
 
