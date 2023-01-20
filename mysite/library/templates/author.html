@@ -3,7 +3,7 @@
 <div>
     <h4>{{ author.first_name }} {{ author.last_name }}</h4>
     <hr>
-    <p>{{ author.description }}</p>
+    <p>{{ author.description | safe }}</p>
     <hr>
     <h5>Mes turime šias {{ author }} knygas:</h5>
     <ul>
