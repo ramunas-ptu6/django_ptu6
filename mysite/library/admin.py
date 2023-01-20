@@ -26,14 +26,14 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'due_back')  # stulpeliai BookInstance viewse admin svetainėje
+    list_display = ('book', 'status', 'due_back', 'reader')  # stulpeliai BookInstance viewse admin svetainėje
     list_filter = ('status', 'due_back')  # sukuriamas filtro skydelis
     search_fields = ('id', 'book__title')  # paieškos laukas
-    list_editable = ('due_back', 'status')  # nurodom kad į list_display įtraukti stulpeliai gali būti redaguojami
+    list_editable = ('due_back', 'status', 'reader')  # nurodom kad į list_display įtraukti stulpeliai gali būti redaguojami
 
     fieldsets = (  # sukuria atskirus tabus laukams (šie laukai rodomi defaultu, čia sukuriamas tik padalinimas)
         ('General', {'fields': ('id', 'book',)}),  # General, Availability - mūsų sukurti tabų pavadinimai, žodynuose
-        ('Availability', {'fields': ('status', 'due_back')})  # raktuose fields nurodoma kokie laukai bus kokiam tabe
+        ('Availability', {'fields': ('status', 'due_back', 'reader')})  # raktuose fields nurodoma kokie laukai bus kokiam tabe
     )
 
 

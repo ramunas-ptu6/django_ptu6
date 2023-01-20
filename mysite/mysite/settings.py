@@ -131,3 +131,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "library/media")
 MEDIA_URL = "/media/"
 
 LOGIN_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'mail.pythonkursas2.smshostingas.lt'
+EMAIL_POST = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'django@pythonkursas2.smshostingas.lt'
+EMAIL_HOST_PASSWORD = '2023PTU6'
