@@ -22,6 +22,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path("library/", include("library.urls")),
     path("admin/", admin.site.urls),
-    path("", RedirectView.as_view(url="library/", permanent=True))
+    path("", RedirectView.as_view(url="library/", permanent=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
               static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
