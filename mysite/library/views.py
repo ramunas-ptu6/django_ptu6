@@ -17,11 +17,15 @@ def index(request):
     # suskaičiuojam autorius
     num_authors = Author.objects.all().count()
 
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
+
     context = {  # šablono konteksto kintamasis
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
-        'num_authors': num_authors
+        'num_authors': num_authors,
+        'num_visits': num_visits,
     }
 
     # formuojam galutinį vaizdą iš šablono index.html ir duomenų
@@ -38,6 +42,11 @@ def authors(request):
         'authors': paged_authors
     }
     return render(request, 'authors.html', context=context)
+
+
+def author(request, author_id):
+    single_author = get_object_or_404(Author, pk=author_id)
+    return render(request, 'author.html', {'author': single_author})
 
 
 def author(request, author_id):

@@ -2,9 +2,9 @@
 {% block content %}
 <div>
     <h4>{{ author.first_name }} {{ author.last_name }}</h4>
-    <hr/>
+    <hr>
     <p>{{ author.description }}</p>
-    <hr/>
+    <hr>
     <h5>Mes turime šias {{ author }} knygas:</h5>
     <ul>
         {% for book_obj in author.books.all %}

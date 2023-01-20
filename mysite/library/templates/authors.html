@@ -4,7 +4,7 @@
 <p>Mūsų knygų autorių sąrašas: </p>
 {% for author_obj in authors %}
 <li><a href="{% url 'author-detail' author_obj.id  %}">
-    {{author_obj}} </a></li>
+    {{author_obj}}</a></li>
 {% endfor %}
 <div class="container puslapiai">
     <nav aria-label="...">
