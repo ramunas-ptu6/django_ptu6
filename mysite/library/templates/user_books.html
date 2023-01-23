@@ -4,13 +4,13 @@
 {% if bookinstance_list %}
 <ul>
     {% for bookinst_obj in bookinstance_list %}
-    <li>{{ bookinst_obj }}</li>
-
-
+    <li class="{% if bookinst_obj.is_overdue %}text-danger{% endif %}">
+    <a href="{% url 'book-detail' bookinst_obj.book.pk %}">{{ bookinst_obj.book.title }}</a>
+        {{ bookinst_obj.due_back }}
+        </li>
     {% endfor %}
 </ul>
 {% else %}
 <p>Šiuo metu nesate paėmęs jokių knygų!</p>
 {% endif %}
-
 {% endblock %}

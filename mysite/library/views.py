@@ -1,8 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Author, Book, BookInstance
 
@@ -76,10 +76,10 @@ def search(request):
 
     return render(request, "search.html", {"books": search_results, "query": query})
 
+
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
     template_name = "user_books.html"
 
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user).filter(status__exact="p").order_by("due_back")
-
