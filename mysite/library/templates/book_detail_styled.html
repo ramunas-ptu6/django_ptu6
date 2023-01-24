@@ -5,7 +5,18 @@
 <p><strong>Aprašymas: </strong>{{ book.summary }} </p>
 <p><strong>ISBN: </strong>{{ book.isbn }} </p>
 <p><strong>Žanras: </strong>{{ book.genre.all|join:", " }}</p>
-
+<hr>
+<h4>Atsiliepimai:</h4>
+{% if book.bookreview_set.all %}
+{% for book_review_obj in book.bookreview_set.all %}
+<hr>
+<p>{{ book_review_obj.reviewer }}, <em>{{ book_review_obj.date_created }}</em></p>
+<p>{{ book_review_obj.content }}</p>
+{% endfor %}
+{% else %}
+<p>Knyga neturi atsiliepimų</p>
+{% endif %}
+<hr>
 <h4>Kopijos:</h4>
 {% for book_inst_obj in book.bookinstance_set.all %}
 <hr>
