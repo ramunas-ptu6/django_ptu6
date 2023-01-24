@@ -6,6 +6,18 @@
 <p><strong>ISBN: </strong>{{ book.isbn }} </p>
 <p><strong>Žanras: </strong>{{ book.genre.all|join:", " }}</p>
 <hr>
+{% if user.is_authenticated %}
+<div class="fieldWrapper">
+<h4>Palikite atsiliepimą:</h4>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.content }}
+        <br>
+        <input type="submit" value="Išsaugoti">
+    </form>
+</div>
+{% endif %}
+<hr>
 <h4>Atsiliepimai:</h4>
 {% if book.bookreview_set.all %}
 {% for book_review_obj in book.bookreview_set.all %}

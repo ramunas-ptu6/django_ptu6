@@ -1,12 +1,14 @@
+from django.contrib import messages
+from django.contrib.auth.forms import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
-from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
-from django.contrib import messages
+from django.views.generic.edit import FormMixin
 
+from .forms import BookReviewForm
 from .models import Author, Book, BookInstance
 
 
@@ -60,9 +62,31 @@ class BookListView(generic.ListView):
     # context_object_name = 'my_book_list' galime pasikeisti automatinį konteksto kintamąjį(book_list) į custom pavadinimą
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(FormMixin, generic.DetailView):
     model = Book  # šablonui autosukuriamas kintamas book
     template_name = 'book_detail_styled.html'
+    form_class = BookReviewForm
+
+    class Meta:
+        ordering = ['title']
+
+    # nukreipimas po sėkmingo komentaro papostinimo atgal į knygos viewsą
+    def get_success_url(self):
+        return reverse('book-detail', kwargs={'pk': self.object.id})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.book = self.object
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super(BookDetailView, self).form_valid(form)
 
 
 def search(request):
@@ -81,6 +105,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user).filter(status__exact="p").order_by("due_back")
+
 
 @csrf_protect
 def register(request):
