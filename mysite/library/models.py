@@ -74,7 +74,7 @@ class BookInstance(models.Model):
         return False
 
     class Meta:
-        ordering = ['due_back'] # admin svetainės settingas, kaip rikiuojama
+        ordering = ['due_back']  # admin svetainės settingas, kaip rikiuojama
 
     def __str__(self):
         return f'{self.id} {self.book.title}'
@@ -109,4 +109,11 @@ class BookReview(models.Model):
     content = models.TextField('Atsiliepimas', max_length=2000)
 
 
+
+class Profilis(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nuotrauka = models.ImageField(default='default.png', upload_to='profile_pics')
+
+    def __str__(self):
+        return f"{self.user.username} profilis"
 

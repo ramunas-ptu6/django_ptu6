@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
 
 from .forms import BookReviewForm
 from .models import Author, Book, BookInstance
@@ -60,7 +61,7 @@ class BookListView(generic.ListView):
     paginate_by = 6
     template_name = 'book_list.html'
     # context_object_name = 'my_book_list' galime pasikeisti automatinį konteksto kintamąjį(book_list) į custom pavadinimą
-
+    ordering = ['title']
 
 class BookDetailView(FormMixin, generic.DetailView):
     model = Book  # šablonui autosukuriamas kintamas book
@@ -135,3 +136,8 @@ def register(request):
             messages.error(request, "Slaptažodžiai nesutampa")
             return redirect("register")
     return render(request, "register.html")
+
+
+@login_required
+def profilis(request):
+    return render(request, "profilis.html")
