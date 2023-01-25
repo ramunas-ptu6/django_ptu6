@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 
-from .forms import BookReviewForm
+from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm
 from .models import Author, Book, BookInstance
 
 
@@ -140,4 +140,21 @@ def register(request):
 
 @login_required
 def profilis(request):
-    return render(request, "profilis.html")
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfilisUpdateForm(request.POST, request.FILES, instance=request.user.profilis)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, "Profilis sėkmingai atnaujintas")
+            return redirect("profilis")
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfilisUpdateForm(instance=request.user.profilis)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, "profilis.html", context=context)
