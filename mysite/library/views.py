@@ -8,6 +8,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormMixin, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _
 
 from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm, UserBookCreateForm
 from .models import Author, Book, BookInstance
@@ -120,20 +121,20 @@ def register(request):
         if password1 == password2:
             # ar neužimtas username
             if User.objects.filter(username=username).exists():
-                messages.error(request, f"Vartotojo vardas {username} užimtas!")
+                messages.error(request, _("Username %s already exists!") % username)
                 return redirect("register")
             else:
                 # ar nėra tokio pačio email
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f"Emailas {email} jau užimtas kito vartotojo")
+                    messages.error(request, _("Email %s already in database") % email)
                     return redirect("register")
                 else:
                     # taškas kai viskas tvarkoje, patikrinimai praeiti, kuriam naują userį
                     User.objects.create_user(username=username, email=email, password=password1)
-                    messages.info(request, f"User {username} succesfully registered")
+                    messages.info(request, _("User %s succesfully registered") % username)
                     return redirect("login")
         else:
-            messages.error(request, "Slaptažodžiai nesutampa")
+            messages.error(request, _("Passwords don't match"))
             return redirect("register")
     return render(request, "register.html")
 

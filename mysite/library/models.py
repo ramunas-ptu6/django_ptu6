@@ -7,6 +7,8 @@ from django.db import models
 from django.urls import reverse
 from tinymce.models import HTMLField
 
+from django.utils.translation import gettext_lazy as _
+
 
 # Create your models here.
 class Genre(models.Model):
@@ -21,12 +23,12 @@ class Genre(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField('Pavadinimas', max_length=200)
+    title = models.CharField(_('Title'), max_length=200)
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True, related_name='books')
-    summary = models.TextField('Aprašymas', max_length=1000, help_text='Trumpas knygos aprašymas')
+    summary = models.TextField(_('Summary'), max_length=1000, help_text='Trumpas knygos aprašymas')
     isbn = models.CharField('ISBN', max_length=13)
     genre = models.ManyToManyField(Genre, help_text='Išrinkite žanrą/us šiai knygai')
-    cover = models.ImageField('Viršelis', upload_to='covers', null=True)
+    cover = models.ImageField(_('Cover'), upload_to='covers', null=True)
 
     def display_genre(self):
         return '; '.join([genre.name for genre in self.genre.all()])

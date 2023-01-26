@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
 
 <h1>Rajono biblioteka</h1>
 <p>Sveiki atvykę į knygų rojų!</p>
 <p>Šiuo metu turime</p>
 <ul>
-    <li>Knygų: {{ num_books }}</li>
-    <li>Egzempliorių: {{ num_instances }} </li>
-    <li>Laisvų egzempliorių: {{ num_instances_available }} </li>
-    <li>Autorių: {{ num_authors }}</li>
+    <li>{% trans "Books" %}: {{ num_books }}</li>
+    <li>{% trans "Book Instances" %}: {{ num_instances }} </li>
+    <li>Now Available: {{ num_instances_available }} </li>
+    <li>Authors: {{ num_authors }}</li>
 </ul>
 <p>Sveiki, {{ user }}</p>
 <p>Čia jūs lankotės: {{ num_visits }}</p>

@@ -4,6 +4,7 @@ from unicodedata import name
 from . import views
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path('', views.index, name='index'),
     path('authors/', views.authors, name='authors'),
     path('authors/<int:author_id>', views.author, name='author-detail'),
@@ -18,5 +19,6 @@ urlpatterns = [
     path('mybooks/<uuid:pk>', views.BookByUserDetailView.as_view(), name='my-book'),
     path('mybooks/<uuid:pk>/update', views.BookByUserUpdateView.as_view(), name='my-book-update'),
     path('mybooks/<uuid:pk>/delete', views.BookByUserDeleteView.as_view(), name='my-book-delete'),
+
 
 ]
