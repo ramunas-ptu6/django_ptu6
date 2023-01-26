@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormMixin, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 
-from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm
+from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm, UserBookCreateForm
 from .models import Author, Book, BookInstance
 
 
@@ -162,9 +162,10 @@ def profilis(request):
 
 class BookByUserCreateView(LoginRequiredMixin, CreateView):
     model = BookInstance
-    fields = ('book', 'due_back', 'status')
+    # fields = ('book', 'due_back', 'status')
     success_url = '/library/mybooks/'
     template_name = 'user_book_form.html'
+    form_class = UserBookCreateForm
 
     def form_valid(self, form):
         form.instance.reader = self.request.user

@@ -33,5 +33,5 @@ class DateInput(forms.DateInput):
 class UserBookCreateForm(forms.ModelForm):
     class Meta:
         model = BookInstance
-        fields = ('book', 'reader', 'due_back')
+        fields = ('book', 'reader', 'due_back', 'status')
         widgets = {'reader': forms.HiddenInput(), 'due_back': DateInput()}
