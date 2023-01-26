@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, CreateView
 from django.contrib.auth.decorators import login_required
 
 from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm
@@ -130,7 +130,7 @@ def register(request):
                 else:
                     # taškas kai viskas tvarkoje, patikrinimai praeiti, kuriam naują userį
                     User.objects.create_user(username=username, email=email, password=password1)
-                    messages.info(request, f"Vartotojas {username} sėkmingai užregistruotas")
+                    messages.info(request, f"User {username} succesfully registered")
                     return redirect("login")
         else:
             messages.error(request, "Slaptažodžiai nesutampa")
@@ -158,3 +158,19 @@ def profilis(request):
     }
 
     return render(request, "profilis.html", context=context)
+
+
+class BookByUserCreateView(LoginRequiredMixin, CreateView):
+    model = BookInstance
+    fields = ('book', 'due_back', 'status')
+    success_url = '/library/mybooks/'
+    template_name = 'user_book_form.html'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        return super().form_valid(form)
+
+
+class BookByUserDetailView(LoginRequiredMixin, BookDetailView):
+    model = BookInstance
+    template_name = 'user_book.html'

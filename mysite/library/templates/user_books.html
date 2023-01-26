@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Mano paimtos knygos:</h1>
+<img class="rounded-circle account-img" src="{{ user.profilis.nuotrauka.url }}"/>
 {% if bookinstance_list %}
 <ul>
     {% for bookinst_obj in bookinstance_list %}
     <li class="{% if bookinst_obj.is_overdue %}text-danger{% endif %}">
     <a href="{% url 'book-detail' bookinst_obj.book.pk %}">{{ bookinst_obj.book.title }}</a>
         {{ bookinst_obj.due_back }}
+        <a href="{% url 'my-book' bookinst_obj.id %}"> keisti - {{ bookinst_obj.id }} </a>
         </li>
     {% endfor %}
 </ul>
