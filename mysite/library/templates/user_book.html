@@ -1,9 +1,18 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <h1>Mano paimta knyga</h1>
 <h4>{{ user }}</h4>
-<img class="rounded-circle" src="{{ bookinstance.book.cover.url }}"/>
+{% if bookinstance.book.cover %}
+<img src="{{ bookinstance.book.cover.url }}"/>
+{% else %}
+<img src="{% static 'img/no-image.png' %}"/>
+{% endif %}
 <h5> {{ bookinstance.book }} - {{ bookinstance.book.author }}</h5>
 <p>egzemplioriaus id: {{ bookinstance.pk }}</p>
 <p class="{% if bookinstance.is_overdue %}text-danger{% endif %}">grąžinimas: {{ bookinstance.due_back }}</p>
+<div>
+    <a class="btn btn-secondary btn-sm" href="{% url 'my-book-update' bookinstance.pk %}">Redaguoti</a>
+    <a class="btn btn-secondary btn-sm" href="{% url 'my-book-delete' bookinstance.pk %}">Trinti</a>
+</div>
 {% endblock %}
